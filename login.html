@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  
+  
+</head>
+<body>
+  <h1>Login</h1>
+  <form   id="forming">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button id="login-btn">Log In</button>
+  </form>
+  <p id="message"></p>
+  <script>
+    const loginForm = document.getElementById('forming');
+    const loginBtn = document.getElementById('login-btn');
+    const messageElem = document.getElementById('message');
+    
+    loginForm.addEventListener('submit', calling);
+
+    
+    function calling(event) {
+      event.preventDefault(); //It is not allow the default form submmison that is Nor Refresh the Page
+      
+      var formData = new FormData(loginForm);
+      formData.append('user','m');
+      formData.append('code','ms');
+      data = {
+        user : 'm',
+        code : 'ms'
+      }
+          url = new  URL('http://localhost:3000/sends' );
+          url.search= new URLSearchParams(data).toString();
+        fetch(url, {
+          method: 'GET',
+      //Ithis is used to convert to the URL - encoded String
+         //body: JSON.stringify({ name: 'm',code : 'ms' })
+        })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          messageElem.textContent = 'Login successful!';
+          alert('SUCCESS');
+        } else {
+          messageElem.textContent = 'Invalid username or password';
+          alert("NOT SUCCESS");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+        
+    </script>
+</body>
+</html>
